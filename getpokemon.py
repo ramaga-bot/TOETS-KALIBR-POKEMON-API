@@ -33,7 +33,7 @@ class ApiFout(Exception):
     """Eigen foutklasse met een leesbare melding voor de gebruiker."""
 
 #---Sleutel (API-KEY)
-"""Zorgen ervoor dat de key wordt opgehaalt en gebruikt""""
+"""Zorgen ervoor dat de key wordt opgehaald en gebruikt"""
 
 def haal_api_sleutel():
     return os.environ.get("API_KEY")
@@ -42,22 +42,22 @@ def maak_headers(sleutel):
     return {"Authorization": f"Bearer {sleutel}"} if sleutel else {}
 
 #---Ophalen
-def controleer_status(response :status_code, ok):
+def controleer_status(response):
     if response.status_code in HERSTELBARE_CODES:
         return False
-    if response.status_code in FOUTMELDINGEN
+    if response.status_code in FOUTMELDINGEN:
         raise ApiFout(FOUTMELDINGEN[response.status_code])
     if not response.ok:
         raise ApiFout(f"Onverwachte statuscode {response.status_code}.")
     return True
 
-def lees_json(response :{json}):
+def lees_json(response :{json} ):
     try:
         return response.json()
     except ValueError:
-        raise ApiFout("De API gaf geene geldige JSON terug")
+        raise ApiFout("De API gaf geen geldige JSON terug")
 
-def wacht_voor_nieuwe_poging(poging : {__sub__} , reden):
+def wacht_voor_nieuwe_poging(poging ):
     wacht= WACHT_BASIS *2 ** (poging - 1)
     print(f"Poging mislukt. Opnieuw proberen")
 
@@ -75,8 +75,7 @@ def haal_json_op(url, headers=None, params=None):
         except requests.ConnectionError:
             laatste_fout = "Geen verbinding met de API (connection error)"
         except (requests.exceptions.InvalidURL,
-                requests.exceptions.InvalidSchema
-                requests.exceptions.MissingSchema):
+                requests.exceptions.InvalidSchema):
             raise ApiFout("De URL is ongeldig")
         except requests.RequestException as e:
             raise ApiFout("Onbekende netwerkfout")
@@ -93,7 +92,7 @@ def haal_pokemon_lijst(aantal, headers=None):
         raise ApiFout("Onbekende pokemon_lijst")
     return resultaten
 
-def haal_pokemon_details(lijst : {__len__}, headers=None):
+def haal_pokemon_details(lijst , headers=None):
     details = []
     totaal = len(lijst)
 
@@ -101,14 +100,14 @@ def haal_pokemon_details(lijst : {__len__}, headers=None):
         try:
             details.append(haal_json_op(f"{BASIS_URL}/pokemon/{nummer}", headers=headers,))
         except (ApiFout, KeyError, TypeError) as e:
-            print("Er ging iets fout probeer A.U.B opnieuw")
+            print('Er ging iets fout probeer A.U.B opnieuw')
 
     print()
     return details
 
 #---wegschrijven
 
-def bepaal_kolommen(data : {__iter__}):
+def bepaal_kolommen(data ):
     kolommen = []
     for rij in data:
         for k in rij:
@@ -116,15 +115,15 @@ def bepaal_kolommen(data : {__iter__}):
                 kolommen.append(k)
     return kolommen
 
-def schrijf_bestand(bestandnaam, schrijf_functie, encoding : str)
-    with open(bestandnaam, "w", encoding=encoding) as f:
-        schrijf_functie
+def schrijf_bestand(bestandsnaam, schrijf_functie, encoding : str):
+    with open(bestandsnaam, "w", encoding=encoding) as f:
+            schrijf_functie(f)
 
 def schrijf_csv(data, bestandsnaam):
-    def schrijf(f)
+    def schrijf(f):
         writer = csv.writer(f)
 
-def schrijf_json(data, bestandnaam):
+def schrijf_json(data, bestandsnaam):
     def schrijf(f):
         json.dump(data, f)
 
@@ -152,13 +151,13 @@ def main():
         ruw = haal_pokemon_lijst(lijst, headers=headers)
         verwerk = verwerk_gegevens(ruw)
 
-        if not verwerkt:
+        if not verwerk:
             print("geen bruikbare gegevens")
             return  1
 
-        schrijf_csv(verwerkt, UITVOER_CSV)
+        schrijf_csv(verwerk, UITVOER_CSV)
         schrijf_json(lijst, UITVOER_JSON)
-        print(f"weggesschreven naar {UITVOER_JSON} en {UITVOER_CSV}")
+        print(f"weggeschreven naar {UITVOER_JSON} en {UITVOER_CSV}")
         return 0
 
     except ApiFout as e:
