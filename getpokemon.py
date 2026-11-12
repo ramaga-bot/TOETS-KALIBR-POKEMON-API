@@ -128,3 +128,46 @@ def schrijf_json(data, bestandnaam):
     def schrijf(f):
         json.dump(data, f)
 
+# --- main
+
+def vraag_aantal():
+    """"main function voor vragen"""
+    antwoord = input(f"hoeveel pokemon ophalen? [{STANDAARD_AANTAL}]")
+    if not antwoord:
+        return STANDAARD_AANTAL
+    try:
+        aantal = int(antwoord)
+    except ValueError:
+        raise ApiFout("vul een valide getal in")
+    if not 1 <= aantal <= MAX_AANTAL:
+        raise ApiFout("Kies een aantal tussen 1 en {MAX_AANTAL}.")
+    return aantal
+
+def main():
+    headers = maak_headers(haal_api_sleutel())
+
+    try:
+        aantal = vraag_aantal()
+        lijst = haal_pokemon_lijst(aantal, headers=headers)
+        ruw = haal_pokemon_lijst(lijst, headers=headers)
+        verwerk = verwerk_gegevens(ruw)
+
+        if not verwerkt:
+            print("geen bruikbare gegevens")
+            return  1
+
+        schrijf_csv(verwerkt, UITVOER_CSV)
+        schrijf_json(lijst, UITVOER_JSON)
+        print(f"weggesschreven naar {UITVOER_JSON} en {UITVOER_CSV}")
+        return 0
+
+    except ApiFout as e:
+        print("Fout")
+    except PermissionError:
+        print("geen schrijfrechten")
+    except OSError as e:
+        print("Fout bij wegschrijven")
+    return 1
+
+if __name__ == "__main__":
+    sys.exit(main())
