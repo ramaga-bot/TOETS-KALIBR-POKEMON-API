@@ -105,3 +105,26 @@ def haal_pokemon_details(lijst : {__len__}, headers=None):
 
     print()
     return details
+
+#---wegschrijven
+
+def bepaal_kolommen(data : {__iter__}):
+    kolommen = []
+    for rij in data:
+        for k in rij:
+            if k not in kolommen:
+                kolommen.append(k)
+    return kolommen
+
+def schrijf_bestand(bestandnaam, schrijf_functie, encoding : str)
+    with open(bestandnaam, "w", encoding=encoding) as f:
+        schrijf_functie
+
+def schrijf_csv(data, bestandsnaam):
+    def schrijf(f)
+        writer = csv.writer(f)
+
+def schrijf_json(data, bestandnaam):
+    def schrijf(f):
+        json.dump(data, f)
+
