@@ -11,3 +11,4 @@ Een Phython-script dat Pokemon-gegevens ophaald via [PokeAPI](https://pokeapi.co
 5. Schrijft het resultaat weg naar `pokemon.csv` en `pokemon.json`.
 
 12:00 na het testen van de programma tref ik een probleem op dit gaan ik met de volgende commit oplossen
+12:30 na testen en het oplossen van problemen lijkt het er op dat de programma werkende is alleen ik kan niet zien waar ik mijn csv en json bestanden opsla
