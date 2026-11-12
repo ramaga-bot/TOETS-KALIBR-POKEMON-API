@@ -105,6 +105,14 @@ def haal_pokemon_details(lijst , headers=None):
     print()
     return details
 
+#---verwerken
+def vereenvoudig_pokemon(p):
+    rij = { "id": p["id"],
+        "naam": p["name"]
+     }
+    return rij
+
+
 #---wegschrijven
 
 def bepaal_kolommen(data ):
@@ -147,9 +155,9 @@ def main():
 
     try:
         aantal = vraag_aantal()
-        lijst = haal_pokemon_lijst(aantal, headers=headers)
-        ruw = haal_pokemon_lijst(lijst, headers=headers)
-        verwerk = verwerk_gegevens(ruw)
+        lijst = (haal_pokemon_lijst (aantal, headers=headers))
+        ruw = (haal_pokemon_lijst(lijst, headers=headers))
+        verwerk = (vereenvoudig_pokemon(p) for p in ruw)
 
         if not verwerk:
             print("geen bruikbare gegevens")
