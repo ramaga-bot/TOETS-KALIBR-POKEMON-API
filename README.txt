@@ -9,3 +9,5 @@ Een Phython-script dat Pokemon-gegevens ophaald via [PokeAPI](https://pokeapi.co
 3. Haalt per Pokemon de details op, met een voortgangsmelding.
 4. Verwerkt de gegevens tot een overzichtelijke tabel.
 5. Schrijft het resultaat weg naar `pokemon.csv` en `pokemon.json`.
+
+12:00 na het testen van de programma tref ik een probleem op dit gaan ik met de volgende commit oplossen
